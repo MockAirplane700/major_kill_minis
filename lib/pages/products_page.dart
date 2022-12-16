@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
+import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 import 'package:major_kill_minis/logic/cart_provider.dart';
 import 'package:major_kill_minis/objects/cart.dart';
+import 'package:major_kill_minis/pages/view_mini.dart';
 import 'package:major_kill_minis/persistence/db_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -19,27 +21,27 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartProvider>(context);
+    // final cart = Provider.of<CartProvider>(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     
-    void saveData(int index) {
-      dbHelper.insert(
-        Cart(
-            id: index, productId: index.toString(),
-            productName: widget.products[index].name, initialPrice: widget.products[index].price,
-            productPrice: widget.products[index].price, quantity: ValueNotifier(1),
-            size: widget.products[index].size, image: widget.products[index].image
-        )
-      ).then((value) {
-        cart.addTotalPrice(widget.products[index].price.toDouble());
-        cart.addCounter();
-      }).onError((error, stackTrace) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('There was an error $error'))
-        );
-      });
-    }//end save data
+    // void saveData(int index) {
+    //   dbHelper.insert(
+    //     Cart(
+    //         id: index, productId: index.toString(),
+    //         productName: widget.products[index].name, initialPrice: widget.products[index].price,
+    //         productPrice: widget.products[index].price, quantity: ValueNotifier(1),
+    //         size: widget.products[index].size, image: widget.products[index].image
+    //     )
+    //   ).then((value) {
+    //     cart.addTotalPrice(widget.products[index].price.toDouble());
+    //     cart.addCounter();
+    //   }).onError((error, stackTrace) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('There was an error $error'))
+    //     );
+    //   });
+    // }//end save data
 
     return ListView.builder(
       itemCount: widget.products.length,
@@ -50,7 +52,7 @@ class _ProductsPageState extends State<ProductsPage> {
           color: cardBackgroundColor,
           elevation: 5.0,
           child: Padding(padding: const EdgeInsets.all(4.0), child: SizedBox(
-            height: height/2,
+            height: height/1.9,
             width: width/2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -115,12 +117,31 @@ class _ProductsPageState extends State<ProductsPage> {
                     ),
                   ),
                 ),
+                Expanded(child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: ElevatedButton(
+                        onPressed: () {
+                          // go to the view minis page
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMini(mini: widget.products[index])));
+                        }, child: const Text('View model')
+                    ))
+                  ],
+                ),),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
                           onPressed: () {
-                            saveData(index);
+                            // saveData(index);
+                            bloc.addToCart({
+                              'name':widget.products[index].name,
+                              'price':widget.products[index].price,
+                              'image' : widget.products[index].image,
+                              'base' : widget.products[index].base,
+                              'link': widget.products[index].link,
+                              'quantity' : 1
+                            });
                           },
                           child: const Text('add to cart')
                       ),

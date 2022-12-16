@@ -13,7 +13,7 @@ class CartItemsBloc {
       {'name': 'Logo Design', 'price': 10, 'id': 3},
       {'name': 'Code review', 'price': 90, 'id': 4},
     ],
-    'cart_items' : []
+    'cart items' : []
   };
 
   void addToCart(item) {

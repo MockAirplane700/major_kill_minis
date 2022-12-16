@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/cart_provider.dart';
+import 'package:major_kill_minis/pages/bloc_pages/checkout_bloc.dart';
 import 'package:major_kill_minis/pages/checkout.dart';
 import 'package:major_kill_minis/pages/home.dart';
+import 'package:major_kill_minis/pages/merchandise_page.dart';
 import 'package:major_kill_minis/pages/products_page.dart';
 import 'package:major_kill_minis/persistence/database.dart';
 import 'package:provider/provider.dart';
@@ -19,27 +21,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => CartProvider(),
-      child: Builder(builder: (context){
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            // This is the theme of your application.
-            //
-            // Try running your application with "flutter run". You'll see the
-            // application has a blue toolbar. Then, without quitting the app, try
-            // changing the primarySwatch below to Colors.green and then invoke
-            // "hot reload" (press "r" in the console where you ran "flutter run",
-            // or simply save your changes to "hot reload" in a Flutter IDE).
-            // Notice that the counter didn't reset back to zero; the application
-            // is not restarted.
-            primarySwatch: Colors.blue,
-          ),
-          home: const MyHomePage(title: ''),
-        );
-      }),
-    );
+      return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: ''),
+      );
   }
 }
 
@@ -68,7 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Checkout()
+    CheckoutBloc(),
+    MerchandisePage()
   ];
 
   void _onItemTapped(int index) {
@@ -101,25 +99,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
               icon: Icon(Icons.home),
             label: 'Home'
           ),
           BottomNavigationBarItem(
-              icon: Badge(
-                badgeContent: Consumer<CartProvider>(
-                  builder: (context, value, child) {
-                    return Text(
-                      value.getCounter().toString(),
-                      style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),
-                    );
-                  },
-                ),
-                position: const BadgePosition(start: 10, bottom: 10),
-                child: const Icon(Icons.shopping_cart),
-              ),
+              icon: Icon(Icons.shopping_cart),
             label: 'cart'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopify),
+              label: 'Merch'
           )
         ],
         selectedItemColor: Colors.red,

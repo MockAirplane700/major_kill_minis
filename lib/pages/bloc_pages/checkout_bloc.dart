@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 
-class Checkout extends StatelessWidget {
-  const Checkout({super.key});
+class CheckoutBloc extends StatelessWidget {
+  const CheckoutBloc({super.key});
 
 
   Widget checkoutListBuilder(snapshot) {
@@ -10,16 +11,38 @@ class Checkout extends StatelessWidget {
       itemCount: snapshot.data["cart items"].length,
       itemBuilder: (BuildContext context, i) {
         final cartList = snapshot.data["cart items"];
-        return ListTile(
-          title: Text(cartList[i]['name']),
-          subtitle: Text("\$${cartList[i]['price']}"),
-          trailing: IconButton(
-            icon: Icon(Icons.remove_shopping_cart),
-            onPressed: () {
-              bloc.removeFromCart(cartList[i]);
+        return Card(
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          shadowColor: shadowColor,
+          child: ListTile(
+            leading: Image.network(cartList[i]['image']),
+            title: Text(cartList[i]['name']),
+            subtitle: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("CAD\$${cartList[i]['price']}0" , style: const TextStyle(color: textColor, fontSize: 14),),
+
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Quantity: ${cartList[i]['quantity'].toString()}', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),)
+
+                  ],
+                )
+              ],
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.remove_shopping_cart , color: Colors.red,),
+              onPressed: () {
+                bloc.removeFromCart(cartList[i]);
+              },
+            ),
+            onTap: () {
+              //empty
             },
           ),
-          onTap: () {},
         );
       },
     );
@@ -29,7 +52,11 @@ class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Checkout')),
+      appBar: AppBar(
+        title: const Text('Checkout' , style: TextStyle(color: textColor),),
+        backgroundColor: appBarColor,
+        iconTheme: const IconThemeData(color: iconThemeDataColor),
+      ),
       body: StreamBuilder(
         stream: bloc.getStream,
         initialData: bloc.allItems,
