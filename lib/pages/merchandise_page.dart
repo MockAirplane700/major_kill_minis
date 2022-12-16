@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
+import 'package:major_kill_minis/logic/major_minis_logic.dart';
 import 'package:major_kill_minis/objects/merch.dart';
 import 'package:major_kill_minis/pages/view_merch.dart';
+import 'package:major_kill_minis/widgets/custom_navigation_drawer.dart';
+import 'package:major_kill_minis/widgets/custom_search_delegate_merchandise.dart';
 
 class MerchandisePage extends StatefulWidget {
   const MerchandisePage({Key? key}) : super(key: key);
@@ -58,14 +61,24 @@ class _MerchandisePageState extends State<MerchandisePage> {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    MajorMiniLogic.setSearchMerch(merch);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Merchandise Page', style: TextStyle(color: textColor),),
         backgroundColor: appBarColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: MySearchDelegateMerch());
+              },
+              icon: const Icon(Icons.search)
+          )
+        ],
         iconTheme: const IconThemeData(color: iconThemeDataColor),
       ),
       backgroundColor: backgroundColor,
+      drawer: const CustomDrawer(),
       body: Padding(padding: EdgeInsets.all(height/80), child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (context , index) {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
+import 'package:major_kill_minis/logic/major_minis_logic.dart';
+import 'package:major_kill_minis/widgets/custom_navigation_drawer.dart';
+import 'package:major_kill_minis/widgets/custom_search_delegate.dart';
 
 class CheckoutBloc extends StatelessWidget {
   const CheckoutBloc({super.key});
@@ -55,6 +58,14 @@ class CheckoutBloc extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Checkout' , style: TextStyle(color: textColor),),
         backgroundColor: appBarColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: MySearchDelegate());
+              },
+              icon: const Icon(Icons.search)
+          )
+        ],
         iconTheme: const IconThemeData(color: iconThemeDataColor),
       ),
       body: StreamBuilder(
@@ -70,7 +81,11 @@ class CheckoutBloc extends StatelessWidget {
               /// room for the the RaisedButton
               Expanded(child: checkoutListBuilder(snapshot)),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // add to log in history and clear the cart
+                  List list = snapshot.data['cart items'];
+                  MajorMiniLogic.setOrderHistory(list);
+                },
                 child: Text("Checkout"),
               ),
               SizedBox(height: 40)
@@ -79,6 +94,7 @@ class CheckoutBloc extends StatelessWidget {
               : Center(child: Text("You haven't taken any item yet"));
         },
       ),
+      drawer: const CustomDrawer(),
     );
   }
 }

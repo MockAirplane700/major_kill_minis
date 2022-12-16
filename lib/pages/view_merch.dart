@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/objects/merch.dart';
+import 'package:major_kill_minis/widgets/custom_search_delegate_merchandise.dart';
 
 class ViewMerch extends StatefulWidget {
   final Merch merch;
@@ -25,6 +26,14 @@ class _ViewMerchState extends State<ViewMerch> {
       appBar: AppBar(
         title: const Text('View Merch'),
         backgroundColor: appBarColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: MySearchDelegateMerch());
+              },
+              icon: const Icon(Icons.search)
+          )
+        ],
         iconTheme: const IconThemeData(color: iconThemeDataColor),
       ),
       backgroundColor: backgroundColor,

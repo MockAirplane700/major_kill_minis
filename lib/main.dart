@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/cart_provider.dart';
 import 'package:major_kill_minis/pages/bloc_pages/checkout_bloc.dart';
-import 'package:major_kill_minis/pages/checkout.dart';
 import 'package:major_kill_minis/pages/home.dart';
 import 'package:major_kill_minis/pages/merchandise_page.dart';
 import 'package:major_kill_minis/pages/products_page.dart';

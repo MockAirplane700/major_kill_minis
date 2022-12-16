@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 import 'package:major_kill_minis/logic/cart_provider.dart';
+import 'package:major_kill_minis/logic/major_minis_logic.dart';
 import 'package:major_kill_minis/objects/cart.dart';
 import 'package:major_kill_minis/pages/view_mini.dart';
 import 'package:major_kill_minis/persistence/db_helper.dart';
@@ -24,24 +25,7 @@ class _ProductsPageState extends State<ProductsPage> {
     // final cart = Provider.of<CartProvider>(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    
-    // void saveData(int index) {
-    //   dbHelper.insert(
-    //     Cart(
-    //         id: index, productId: index.toString(),
-    //         productName: widget.products[index].name, initialPrice: widget.products[index].price,
-    //         productPrice: widget.products[index].price, quantity: ValueNotifier(1),
-    //         size: widget.products[index].size, image: widget.products[index].image
-    //     )
-    //   ).then((value) {
-    //     cart.addTotalPrice(widget.products[index].price.toDouble());
-    //     cart.addCounter();
-    //   }).onError((error, stackTrace) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('There was an error $error'))
-    //     );
-    //   });
-    // }//end save data
+    MajorMiniLogic.setSearchCollection(widget.products);
 
     return ListView.builder(
       itemCount: widget.products.length,
