@@ -72,26 +72,48 @@ class CheckoutBloc extends StatelessWidget {
         stream: bloc.getStream,
         initialData: bloc.allItems,
         builder: (context, snapshot) {
-          return snapshot.data['cart items'].length > 0
-              ? Column(
-            children: <Widget>[
-              /// The [checkoutListBuilder] has to be fixed
-              /// in an expanded widget to ensure it
-              /// doesn't occupy the whole screen and leaves
-              /// room for the the RaisedButton
-              Expanded(child: checkoutListBuilder(snapshot)),
-              ElevatedButton(
-                onPressed: () {
-                  // add to log in history and clear the cart
-                  List list = snapshot.data['cart items'];
-                  MajorMiniLogic.setOrderHistory(list);
-                },
-                child: Text("Checkout"),
-              ),
-              SizedBox(height: 40)
-            ],
-          )
-              : Center(child: Text("You haven't taken any item yet"));
+          if (snapshot.data['cart items'] != null) {
+            List list = snapshot.data['cart items'];
+            double total = 0.0;
+            for(var element in list) {
+              total += double.parse(element['price'].toString());
+            }//end for loop
+
+            return snapshot.data['cart items'].length > 0
+                ? Column(
+              children: <Widget>[
+                /// The [checkoutListBuilder] has to be fixed
+                /// in an expanded widget to ensure it
+                /// doesn't occupy the whole screen and leaves
+                /// room for the the RaisedButton
+                Expanded(child: checkoutListBuilder(snapshot)),
+                // here we calculate the total
+                const Divider(),
+                Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height/80), child:Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(child: Text('Total (Before any tax or delivery):' , style: TextStyle(color: textColor),)),
+                    Text('CAD\$${total.toString()}0' , style: const TextStyle(color: textColor),)
+                  ],
+                ),),
+                ElevatedButton(
+                  onPressed: () {
+                    // add to log in history and clear the cart
+                    List list = snapshot.data['cart items'];
+                    MajorMiniLogic.setOrderHistory(list);
+
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Items have been added to history. Thank you :)')));
+                    bloc.clearCart();
+                  },
+                  child: const Text("Checkout"),
+                ),
+                const SizedBox(height: 40)
+              ],
+            )
+                : const Center(child: Text("You haven't taken any item yet"));
+          }else{
+            return const Center(child: Text("You haven't taken any item yet"));
+          }
         },
       ),
       drawer: const CustomDrawer(),

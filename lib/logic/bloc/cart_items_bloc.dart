@@ -18,15 +18,32 @@ class CartItemsBloc {
 
   void addToCart(item) {
     /// update the quantity in stock
-    allItems['shop items'].remove(item);
-    allItems['cart items'].add(item);
+    // check if item is in cart
+    List list = allItems['cart items'];
+    bool boolean = true;
+    for(var element in list ) {
+      if (element['name'].contains(item['name'])){
+        boolean = false;
+      }
+    }//end for loop
+
+    if (boolean) {
+      allItems['cart items'].add(item);
+      cartStreamController.sink.add(allItems);
+    }
+  }
+
+  void clearCart() {
+    allItems.clear();
+    allItems.addAll({
+      'cart items' : []
+    });
     cartStreamController.sink.add(allItems);
   }
 
   void removeFromCart(item) {
     /// update the quantity in stock
     allItems['cart items'].remove(item);
-    allItems['store items'].add(item);
     cartStreamController.sink.add(allItems);
   }// end remove from cart
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
+import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 import 'package:major_kill_minis/logic/cart_provider.dart';
 import 'package:major_kill_minis/pages/bloc_pages/checkout_bloc.dart';
 import 'package:major_kill_minis/pages/home.dart';
@@ -98,16 +99,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
               icon: Icon(Icons.home),
             label: 'Home'
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
+              icon: Badge(
+                badgeContent: StreamBuilder(
+                    builder: (context , snapshot) {
+                      if (snapshot.hasData) {
+                        return snapshot.data['cart items'] != null ? Text(snapshot.data['cart items'].length.toString()) : const Text('0');
+                      }else{
+                        return const Center(child: Text('0'),);
+                      }//end if-else
+                    },
+                  stream: bloc.getStream,
+                ),
+                child: const Icon(Icons.shopping_cart,),
+              ),
             label: 'cart'
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.shopify),
               label: 'Merch'
           )

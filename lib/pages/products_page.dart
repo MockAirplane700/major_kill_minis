@@ -121,11 +121,14 @@ class _ProductsPageState extends State<ProductsPage> {
                             bloc.addToCart({
                               'name':widget.products[index].name,
                               'price':widget.products[index].price,
+                              'description' : widget.products[index].description,
                               'image' : widget.products[index].image,
                               'base' : widget.products[index].base,
                               'link': widget.products[index].link,
                               'quantity' : 1
                             });
+                            // notify the user 
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${widget.products[index].name} has been added to cart')));
                           },
                           child: const Text('add to cart')
                       ),

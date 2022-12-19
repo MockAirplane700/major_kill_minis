@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 import 'package:major_kill_minis/objects/major_mini.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ViewMini extends StatefulWidget {
   final MajorMini mini;
@@ -109,6 +110,7 @@ class _ViewMiniState extends State<ViewMini> {
                 IconButton(
                     onPressed: (){
                       // share the link to the web page
+                      Share.share(widget.mini.link);
                     },
                     icon: const Icon(Icons.share)
                 )
@@ -136,12 +138,16 @@ class _ViewMiniState extends State<ViewMini> {
                       double resultPrice = widget.mini.price * quantity;
                       bloc.addToCart({
                         'name':widget.mini.name,
+                        'description' : widget.mini.description,
                         'price': resultPrice.toString(),
                         'image' : widget.mini.image,
                         'base' : widget.mini.base,
                         'link': widget.mini.link,
                         'quantity' : quantity
                       });
+
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${widget.mini.name} has been added to cart')));
+
                     }, child: const Text('Add to cart', style: TextStyle(color: textColor),)
                 ))
               ],

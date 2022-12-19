@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:major_kill_minis/logic/history_logic.dart';
+import 'package:major_kill_minis/objects/history.dart';
+
 class MajorMiniLogic {
   static List orderHistory = [];
   static List searchCollection = [];
@@ -9,6 +14,16 @@ class MajorMiniLogic {
   }
 
   static void setOrderHistory(List list) {
+    // list of cart items
+    for (var element in list) {
+      HistoryLogic.addHistory(
+        History(
+            id: Random().nextInt(100000), name:  element['name'], description:  element['description'],
+            networkImage:  element['image'], quantity:  element['quantity'],
+            price: element['price'].toString()
+        )
+      );
+    }
     orderHistory.addAll(list);
   }
 
