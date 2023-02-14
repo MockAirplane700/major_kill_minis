@@ -74,6 +74,7 @@ class _ViewMiniState extends State<ViewMini> {
                     options: CarouselOptions(
                       height: height/2,
                       enlargeCenterPage: true,
+                      autoPlay: true,
                       viewportFraction: 1.0,
 
                     )
