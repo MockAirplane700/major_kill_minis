@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:major_kill_minis/constants/functions.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/bloc/cart_items_bloc.dart';
 import 'package:major_kill_minis/objects/merch.dart';
@@ -147,93 +148,94 @@ class _ViewMerchState extends State<ViewMerch> {
             shadowColor: shadowColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(width/90)),
             elevation: 8,
-            child: Padding(padding: EdgeInsets.all(width/40), child: Text(widget.merch.description , style: const TextStyle(color: textColor ),),),
+            child: Padding(padding: EdgeInsets.all(width/40), child: Text(fixDescription(widget.merch.description) , style: const TextStyle(color: textColor ),),),
           ),
-          // Size => Row of circles you can select
-          SizedBox(
-            width: width,
-            height: height/8,
-            child: ListView.builder(
-              itemBuilder: (context , index) {
-                return GestureDetector(
-                  onTap: () {
-                    _selectedColor(index);
-                    if (index == 0) {
-                      //small
-                      _setSize('small');
-                    }
-
-                    if (index == 1) {
-                      //medium
-                      _setSize('medium');
-                    }
-
-                    if (index == 2) {
-                      //large
-                      _setSize('large');
-                    }
-
-                    if (index == 3) {
-                      //XL
-                      _setSize('XL');
-                    }
-
-                    if (index == 4) {
-                      //2XL
-                      _setSize('2XL');
-                    }
-
-                    if (index == 5){
-                      //3XL
-                      _setSize('3XL');
-                    }
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: sizesBackgroundColors[index],
-                    radius: height/20,
-                    child: Text(sizes[index] , style:const TextStyle(color: textColor, fontSize: 25, fontWeight: FontWeight.bold),),
-                  ),
-                );
-              },
-              scrollDirection: Axis.horizontal,
-              itemCount: sizes.length,
-            ),
-          ),
-          // quantity
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(onPressed: _increment, icon: const Icon(Icons.add)),
-              Text(quantity.toString()),
-              IconButton(onPressed: _decrement, icon: const Icon(Icons.remove))
-            ],
-          ),
+          // // Size => Row of circles you can select
+          // SizedBox(
+          //   width: width,
+          //   height: height/8,
+          //   child: ListView.builder(
+          //     itemBuilder: (context , index) {
+          //       return GestureDetector(
+          //         onTap: () {
+          //           _selectedColor(index);
+          //           if (index == 0) {
+          //             //small
+          //             _setSize('small');
+          //           }
+          //
+          //           if (index == 1) {
+          //             //medium
+          //             _setSize('medium');
+          //           }
+          //
+          //           if (index == 2) {
+          //             //large
+          //             _setSize('large');
+          //           }
+          //
+          //           if (index == 3) {
+          //             //XL
+          //             _setSize('XL');
+          //           }
+          //
+          //           if (index == 4) {
+          //             //2XL
+          //             _setSize('2XL');
+          //           }
+          //
+          //           if (index == 5){
+          //             //3XL
+          //             _setSize('3XL');
+          //           }
+          //         },
+          //         child: CircleAvatar(
+          //           backgroundColor: sizesBackgroundColors[index],
+          //           radius: height/20,
+          //           child: Text(sizes[index] , style:const TextStyle(color: textColor, fontSize: 25, fontWeight: FontWeight.bold),),
+          //         ),
+          //       );
+          //     },
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: sizes.length,
+          //   ),
+          // ),
+          // // quantity
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     IconButton(onPressed: _increment, icon: const Icon(Icons.add)),
+          //     Text(quantity.toString()),
+          //     IconButton(onPressed: _decrement, icon: const Icon(Icons.remove))
+          //   ],
+          // ),
           // add to cart
           GestureDetector(
             onTap: (){
-              // add to cart
-              double total = widget.merch.price * quantity;
-              bloc.addToCart({
-                'name':widget.merch.name,
-                'price':total,
-                'description' : widget.merch.description,
-                'image' : widget.merch.images[0],
-                'size' : size,
-                'link': widget.merch.link,
-                'quantity' : quantity
-              });
-              //notify the user
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${widget.merch.name} has been added to cart')));
+              // // add to cart
+              // double total = widget.merch.price * quantity;
+              // bloc.addToCart({
+              //   'name':widget.merch.name,
+              //   'price':total,
+              //   'description' : widget.merch.description,
+              //   'image' : widget.merch.images[0],
+              //   'size' : size,
+              //   'link': widget.merch.link,
+              //   'quantity' : quantity
+              // });
+              // //notify the user
+              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${widget.merch.name} has been added to cart')));
+              launchWebSiteUrl(widget.merch.link);
             },
             child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(width/5)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height/80)),
               elevation: 10,
               shadowColor: shadowColor,
-              color: Colors.white10,
+              color: iconColor,
               child: SizedBox(
                 width: width,
                 height: height/20,
-                child: const Center(child: Text('Add to cart' , style: TextStyle(color: textColor),),),
+                child: const Center(child: Text('Purchase' , style: TextStyle(color: textColor),),),
               ),
             ),
           )

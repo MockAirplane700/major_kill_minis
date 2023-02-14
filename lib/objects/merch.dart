@@ -8,4 +8,11 @@ class Merch {
 
   Merch({required this.name, required this.description, required this.size,
     required this.link, required this.images, required this.price});
+
+  factory Merch.fromJson(Map<String,dynamic> json){
+    return Merch(
+        name: json['name'], description: json['description'],
+        size: json['size'].split(','), link: json['link'],
+        images: json['images'].split(','), price: double.parse(json['price']));
+  }
 }

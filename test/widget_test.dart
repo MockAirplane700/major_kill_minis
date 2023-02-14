@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:major_kill_minis/constants/functions.dart';
 
 import 'package:major_kill_minis/main.dart';
 
@@ -26,5 +27,9 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  test('Test string processing', () {
+    print(fixDescription('abbb\\nabbb\\n'));
   });
 }

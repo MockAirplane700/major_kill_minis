@@ -31,3 +31,12 @@ void launchEmailIntent(String mailto , String subject) {
 
   launchUrl(emailLaunchUri);
 }//end method
+
+String fixDescription(String description) {
+  List sepStrings = description.split('\\n');
+  String result = '';
+  for (var variable in sepStrings){
+    result = '$result\n$variable';
+  }
+  return result;
+}

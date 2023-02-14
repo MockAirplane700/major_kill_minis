@@ -16,6 +16,12 @@ const Color drawerHeaderColor = Colors.white30;
 
 // the color of icons
 const Color iconColor = Colors.pinkAccent;
+const Color buttonColor = Colors.pinkAccent;
 
 // dialog box background color
 const Color dialogBoxBackgroundColor = Colors.white30;
+
+// merchandise url
+const String merchandiseUrl = 'https://major-minis-server-hq7yq.ondigitalocean.app/majorKillMerch';
+// minis url
+const String minisUrl = 'https://major-minis-server-hq7yq.ondigitalocean.app/majorMinis';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
+import 'package:major_kill_minis/logic/major_minis_logic.dart';
 import 'package:major_kill_minis/pages/products_page.dart';
 import 'package:major_kill_minis/persistence/database.dart';
 import 'package:major_kill_minis/widgets/custom_navigation_drawer.dart';
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home', style: TextStyle(color: textColor),),
+        title: const Text('', style: TextStyle(color: textColor),),
         backgroundColor: appBarColor,
         actions: [
           IconButton(
@@ -31,7 +32,17 @@ class _HomeState extends State<Home> {
       ),
       drawer: const CustomDrawer(),
       backgroundColor: backgroundColor,
-      body: ProductsPage(products: PersistentDatabase.getProducts()),
+      body: FutureBuilder(
+          builder: (context, snapshot){
+            if (snapshot.hasData){
+              List minis = snapshot.data as List<dynamic>;
+              return ProductsPage(products: minis);
+            }else{
+              return const Center(child: CircularProgressIndicator(),);
+            }
+          },
+        future: MajorMiniLogic.getMinis(),
+      ),
     );
   }
 }

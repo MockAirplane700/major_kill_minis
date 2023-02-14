@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:major_kill_minis/logic/history_logic.dart';
 import 'package:major_kill_minis/objects/history.dart';
+import 'package:major_kill_minis/persistence/database.dart';
 
 class MajorMiniLogic {
   static List orderHistory = [];
@@ -43,5 +44,9 @@ class MajorMiniLogic {
   static void setSearchCollection(List list) {
     searchCollection.clear();
     searchCollection.addAll(list);
+  }
+
+  static Future getMinis() async {
+    return PersistentDatabase.getMinis();
   }
 }

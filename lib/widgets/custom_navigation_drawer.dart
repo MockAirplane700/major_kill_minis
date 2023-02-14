@@ -41,14 +41,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 // backgroundImage: NetworkImage(logoUrl, scale: MediaQuery.of(context).size.width),
               ),),
             // Favourite stores
-            ListTile(
-              leading: const Icon(Icons.history, color: iconColor,),
-              title: const Text('Order History', style: TextStyle(color: textColor),),
-              onTap: () {
-                //go to favourites page
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const OrderHistory()));
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.history, color: iconColor,),
+            //   title: const Text('Order History', style: TextStyle(color: textColor),),
+            //   onTap: () {
+            //     //go to favourites page
+            //     Navigator.push(context, MaterialPageRoute(builder: (context)=> const OrderHistory()));
+            //   },
+            // ),
             // Share the application
             ListTile(
               leading: const Icon(Icons.share, color: iconColor,),
@@ -59,52 +59,52 @@ class _CustomDrawerState extends State<CustomDrawer> {
               },
             ),
             // Follow us on our socials
-            ListTile(
-              leading: const Icon(Icons.contacts_rounded, color: iconColor,),
-              title: const Text('Follow us on our socials!', style: TextStyle(color: textColor),),
-              onTap: () {
-                //open dialog to icon buttons to socials
-                showDialog(context: context, builder: (context)=> AlertDialog(
-                  title: const Text('Where we are currently are!.'),
-                  backgroundColor: dialogBoxBackgroundColor,
-                  content: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/80), child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(child: IconButton(onPressed: () {
-                        launchWebSiteUrl('https://www.instagram.com/mockAirplane700');
-                      }, icon:const  FaIcon(FontAwesomeIcons.instagram))) ,
-                      Expanded(child: IconButton(onPressed: () {
-                        launchWebSiteUrl('https://www.youtube.com');
-                      }, icon: const FaIcon(FontAwesomeIcons.youtube),))
-                    ],
-                  ),),
-                ));
-              },
-            ),
-            // Rate our application
-            ListTile(
-              leading: const Icon(Icons.rate_review_outlined, color: iconColor,),
-              title: const Text('Rate this app', style: TextStyle(color: textColor),),
-              onTap: () {
-                //go to ratings page on store
-                showDialog(context: context, builder: (context)=> AlertDialog(
-                  title: const Text('Please select the platform you are currenlty on.'),
-                  backgroundColor: dialogBoxBackgroundColor,
-                  content: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/80), child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(child: IconButton(onPressed: () {
-                        // link to store page
-                        launchWebSiteUrl('https://www.apple.com');
-                      }, icon:const  FaIcon(FontAwesomeIcons.appStoreIos))) ,
-                      Expanded(child: IconButton(onPressed: () {
-                        launchWebSiteUrl('https://www.googleplaystore.com');
-                      }, icon: const FaIcon(FontAwesomeIcons.googlePlay),))
-                    ],
-                  ),),
-                ));
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.contacts_rounded, color: iconColor,),
+            //   title: const Text('Follow us on our socials!', style: TextStyle(color: textColor),),
+            //   onTap: () {
+            //     //open dialog to icon buttons to socials
+            //     showDialog(context: context, builder: (context)=> AlertDialog(
+            //       title: const Text('Where we are currently are!.'),
+            //       backgroundColor: dialogBoxBackgroundColor,
+            //       content: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/80), child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Expanded(child: IconButton(onPressed: () {
+            //             launchWebSiteUrl('https://www.instagram.com/mockAirplane700');
+            //           }, icon:const  FaIcon(FontAwesomeIcons.instagram))) ,
+            //           Expanded(child: IconButton(onPressed: () {
+            //             launchWebSiteUrl('https://www.youtube.com');
+            //           }, icon: const FaIcon(FontAwesomeIcons.youtube),))
+            //         ],
+            //       ),),
+            //     ));
+            //   },
+            // ),
+            // // Rate our application
+            // ListTile(
+            //   leading: const Icon(Icons.rate_review_outlined, color: iconColor,),
+            //   title: const Text('Rate this app', style: TextStyle(color: textColor),),
+            //   onTap: () {
+            //     //go to ratings page on store
+            //     showDialog(context: context, builder: (context)=> AlertDialog(
+            //       title: const Text('Please select the platform you are currenlty on.'),
+            //       backgroundColor: dialogBoxBackgroundColor,
+            //       content: Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/80), child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Expanded(child: IconButton(onPressed: () {
+            //             // link to store page
+            //             launchWebSiteUrl('https://www.apple.com');
+            //           }, icon:const  FaIcon(FontAwesomeIcons.appStoreIos))) ,
+            //           Expanded(child: IconButton(onPressed: () {
+            //             launchWebSiteUrl('https://www.googleplaystore.com');
+            //           }, icon: const FaIcon(FontAwesomeIcons.googlePlay),))
+            //         ],
+            //       ),),
+            //     ));
+            //   },
+            // ),
             // report a bug
             ListTile(
               leading: const Icon(Icons.bug_report_rounded, color: iconColor,),

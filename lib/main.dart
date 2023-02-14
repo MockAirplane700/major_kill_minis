@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
       return MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -65,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
-    CheckoutBloc(),
-    MerchandisePage()
+    MerchandisePage(),
+     CheckoutBloc(),
   ];
 
   void _onItemTapped(int index) {
@@ -99,28 +100,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
               icon: Icon(Icons.home),
             label: 'Home'
           ),
+          // BottomNavigationBarItem(
+          //     icon: Badge(
+          //       badgeContent: StreamBuilder(
+          //           builder: (context , snapshot) {
+          //             if (snapshot.hasData) {
+          //               return snapshot.data['cart items'] != null ? Text(snapshot.data['cart items'].length.toString()) : const Text('0');
+          //             }else{
+          //               return const Center(child: Text('0'),);
+          //             }//end if-else
+          //           },
+          //         stream: bloc.getStream,
+          //       ),
+          //       child: const Icon(Icons.shopping_cart,),
+          //     ),
+          //   label: 'cart'
+          // ),
           BottomNavigationBarItem(
-              icon: Badge(
-                badgeContent: StreamBuilder(
-                    builder: (context , snapshot) {
-                      if (snapshot.hasData) {
-                        return snapshot.data['cart items'] != null ? Text(snapshot.data['cart items'].length.toString()) : const Text('0');
-                      }else{
-                        return const Center(child: Text('0'),);
-                      }//end if-else
-                    },
-                  stream: bloc.getStream,
-                ),
-                child: const Icon(Icons.shopping_cart,),
-              ),
-            label: 'cart'
-          ),
-          const BottomNavigationBarItem(
               icon: Icon(Icons.shopify),
               label: 'Merch'
           )

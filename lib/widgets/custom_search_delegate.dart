@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/major_minis_logic.dart';
+import 'package:major_kill_minis/objects/major_mini.dart';
 import 'package:major_kill_minis/pages/view_mini.dart';
 
 class MySearchDelegate extends SearchDelegate{
@@ -23,19 +24,20 @@ class MySearchDelegate extends SearchDelegate{
   );
 
   @override
-  Widget buildResults(BuildContext context) => _list.isNotEmpty ? ListTile(
-    leading: Image.network(_list[indexValue].image),
-    title: Text(_list[indexValue].name),
-    subtitle: Text('CAD\$${_list[indexValue].price.toString()}0', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+
+  Widget buildResults(BuildContext context) =>  _list[indexValue]['name'].toLowerCase().contains(query.toLowerCase()) ? ListTile(
+    leading: Image.network(_list[indexValue]['images'].split(',')[0]),
+    title: Text(_list[indexValue]['name']),
+    subtitle: Text('CAD\$${_list[indexValue]['price']}', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMini(mini: _list[indexValue])));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMini(mini: MajorMini.fromJson(_list[indexValue]))));
     },
   ) :  Center(child: Text('Could not find $query'),);
 
   @override
   Widget buildSuggestions(BuildContext context) {
     List suggestions = _list.where((element) {
-      final elementNameComparison = element.name.toLowerCase();
+      final elementNameComparison = element['name'].toLowerCase();
       final input = query.toLowerCase();
       return elementNameComparison.contains(input);
     }).toList();
@@ -52,11 +54,11 @@ class MySearchDelegate extends SearchDelegate{
             ),);
           }else{
               return ListTile(
-                leading: Image.network(suggestions[index].image),
-                title: Text(suggestions[index].name),
-                subtitle: Text('CAD\$${suggestions[index].price.toString()}0', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+                leading: Image.network(suggestions[index]['images'].split(',')[0]),
+                title: Text(suggestions[index]['name']),
+                subtitle: Text('CAD\$${suggestions[index]['price']}', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMini(mini: suggestions[index])));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMini(mini: MajorMini.fromJson(suggestions[index]))));
                 },
               );
           }//end if-else

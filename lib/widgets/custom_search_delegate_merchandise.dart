@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:major_kill_minis/constants/variables.dart';
 import 'package:major_kill_minis/logic/major_minis_logic.dart';
+import 'package:major_kill_minis/objects/merch.dart';
 import 'package:major_kill_minis/pages/view_merch.dart';
 import 'package:major_kill_minis/pages/view_mini.dart';
 
@@ -24,19 +25,20 @@ class MySearchDelegateMerch extends SearchDelegate{
   );
 
   @override
-  Widget buildResults(BuildContext context) => _list.isNotEmpty ? ListTile(
-    leading: Image.network(_list[indexValue].images[0]),
-    title: Text(_list[indexValue].name),
-    subtitle: Text('CAD\$${_list[indexValue].price.toString()}0', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+
+  Widget buildResults(BuildContext context) =>  _list[indexValue]['name'].toLowerCase().contains(query.toLowerCase()) ? ListTile(
+    leading: Image.network(_list[indexValue]['images'].split(',')[0]),
+    title: Text(_list[indexValue]['name']),
+    subtitle: Text('CAD\$${_list[indexValue]['price']}', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMerch(merch: _list[indexValue])));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMerch(merch: Merch.fromJson( _list[indexValue]))));
     },
   ) :  Center(child: Text('Could not find $query'),);
 
   @override
   Widget buildSuggestions(BuildContext context) {
     List suggestions = _list.where((element) {
-      final elementNameComparison = element.name.toLowerCase();
+      final elementNameComparison = element['name'].toLowerCase();
       final input = query.toLowerCase();
       return elementNameComparison.contains(input);
     }).toList();
@@ -53,11 +55,11 @@ class MySearchDelegateMerch extends SearchDelegate{
           ),);
         }else{
           return ListTile(
-            leading: Image.network(suggestions[index].images[0]),
-            title: Text(suggestions[index].name),
-            subtitle: Text('CAD\$${suggestions[index].price.toString()}0', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
+            leading: Image.network(suggestions[index]['images'].split(',')[0]),
+            title: Text(suggestions[index]['name']),
+            subtitle: Text('CAD\$${suggestions[index]['price']}', style: const TextStyle(color: textColor, fontWeight: FontWeight.bold),),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMerch(merch: suggestions[index])));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewMerch(merch: Merch.fromJson(suggestions[index]))));
             },
           );
         }//end if-else
